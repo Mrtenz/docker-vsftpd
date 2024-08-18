@@ -23,7 +23,6 @@ chown -R ftp:ftp /home/vsftpd/
 
 echo -e "${FTP_USER}\n${FTP_PASS}" > /etc/vsftpd/virtual_users.txt
 /usr/bin/db_load -T -t hash -f /etc/vsftpd/virtual_users.txt /etc/vsftpd/virtual_users.db
-rm /etc/vsfptd/virtual_users.txt
 
 # Set passive mode parameters:
 if [ "$PASV_ADDRESS" = "**IPv4**" ]; then
@@ -57,7 +56,8 @@ if [ "$SSL_ENABLE" = "YES" ]; then
 fi
 
 # Get log file path
-export LOG_FILE=`grep xferlog_file /etc/vsftpd/vsftpd.conf|cut -d= -f2`
+export LOG_FILE=`grep xferlog_file /etc/vsftpd/vsftpd.conf | cut -d= -f2`
+touch "$LOG_FILE"
 
 # stdout server info:
 if [ ! $LOG_STDOUT ]; then
@@ -77,7 +77,7 @@ cat << EOB
 	· Redirect vsftpd log to STDOUT: No.
 EOB
 else
-    /usr/bin/ln -sf /dev/stdout $LOG_FILE
+    /usr/bin/ln -sf /dev/stdout "$LOG_FILE"
 fi
 
 # Run vsftpd:
