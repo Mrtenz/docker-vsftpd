@@ -117,6 +117,7 @@ This image uses environment variables to allow the configuration of some paramet
 * Description: Set to YES if you want to disable the PASV security check that ensures the data connection originates from the same IP address as the control connection. Only enable if you know what you are doing! The only legitimate use for this is in some form of secure tunnelling scheme, or perhaps to facilitate FXP support.
 
 ----
+
 * Variable name: `PORT_PROMISCUOUS`
 * Default value: NO
 * Accepted values: <NO|YES>
@@ -124,10 +125,31 @@ This image uses environment variables to allow the configuration of some paramet
 
 ----
 
+* Variable name: `SSL_ENABLE`
+* Default value: NO
+* Accepted values: YES or NO.
+* Description: Set to YES if you want to enable SSL encryption - make FTPS server.
+
+----
+
+* Variable name: `TLS_CERT`
+* Default value: cert.pem
+* Accepted values: Any string representing filename with extension
+* Description: Certificate filename which should be located in `/etc/vsftpd/cert/` of container.
+
+----
+
+* Variable name: `TLS_KEY`
+* Default value: key.pem
+* Accepted values: Any string representing filename with extension
+* Description: Key filename which should be located in `/etc/vsftpd/cert/` of container.
+
+----
+
 Exposed ports and volumes
 ----
 
-The image exposes ports `20` and `21`. Also, exports two volumes: `/home/vsftpd`, which contains users home directories, and `/var/log/vsftpd`, used to store logs.
+The image exposes ports `20` and `21`. Also, exports two volumes: `/home/vsftpd`, which contains users home directories, and `/var/log/vsftpd`, used to store logs, and `/etc/vsftpd/cert`, to provide SSL certificate to container.
 
 When sharing a homes directory between the host and the container (`/home/vsftpd`) the owner user id and group id should be 14 and 50 respectively. This corresponds to ftp user and ftp group on the container, but may match something else on the host.
 
@@ -155,6 +177,7 @@ docker run -d -v /my/data/directory:/home/vsftpd \
 -p 20:20 -p 21:21 -p 21100-21110:21100-21110 \
 -e FTP_USER=myuser -e FTP_PASS=mypass \
 -e PASV_ADDRESS=127.0.0.1 -e PASV_MIN_PORT=21100 -e PASV_MAX_PORT=21110 \
+-e SSL_ENABLE=YES -e TLS_CERT=ftps_localhost.crt -e TLS_KEY=ftps_localhost.key \
 --name vsftpd --restart=always fauria/vsftpd
 ```
 

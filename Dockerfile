@@ -33,6 +33,9 @@ ENV LOCAL_UMASK 077
 ENV REVERSE_LOOKUP_ENABLE YES
 ENV PASV_PROMISCUOUS NO
 ENV PORT_PROMISCUOUS NO
+ENV SSL_ENABLE NO
+ENV TLS_CERT cert.pem
+ENV TLS_KEY key.pem
 
 COPY vsftpd.conf /etc/vsftpd/
 COPY vsftpd_virtual /etc/pam.d/
@@ -44,6 +47,7 @@ RUN chown -R ftp:ftp /home/vsftpd/
 
 VOLUME /home/vsftpd
 VOLUME /var/log/vsftpd
+VOLUME /etc/vsftpd/cert
 
 EXPOSE 20 21
 
