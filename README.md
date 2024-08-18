@@ -1,25 +1,25 @@
-# fauria/vsftpd
+# mrtenz/vsftpd
 
 ![docker_logo](https://raw.githubusercontent.com/fauria/docker-vsftpd/master/docker_139x115.png)![docker_fauria_logo](https://raw.githubusercontent.com/fauria/docker-vsftpd/master/docker_fauria_161x115.png)
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/fauria/vsftpd.svg?style=plastic)](https://hub.docker.com/r/fauria/vsftpd/)
-[![Docker Build Status](https://img.shields.io/docker/build/fauria/vsftpd.svg?style=plastic)](https://hub.docker.com/r/fauria/vsftpd/builds/)
-[![](https://images.microbadger.com/badges/image/fauria/vsftpd.svg)](https://microbadger.com/images/fauria/vsftpd "fauria/vsftpd")
+[![Docker Pulls](https://img.shields.io/docker/pulls/mrtenz/vsftpd.svg?style=plastic)](https://hub.docker.com/r/mrtenz/vsftpd/)
+[![Docker Build Status](https://img.shields.io/docker/build/mrtenz/vsftpd.svg?style=plastic)](https://hub.docker.com/r/mrtenz/vsftpd/builds/)
+[![](https://images.microbadger.com/badges/image/mrtenz/vsftpd.svg)](https://microbadger.com/images/mrtenz/vsftpd "mrtenz/vsftpd")
 
 This Docker container implements a vsftpd server, with the following features:
 
- * Centos 7 base image.
+ * Debian 12 base image.
  * vsftpd 3.0
  * Virtual users
  * Passive mode
  * Logging to a file or `STDOUT`.
 
-### Installation from [Docker registry hub](https://registry.hub.docker.com/r/fauria/vsftpd/).
+### Installation from [Docker registry hub](https://registry.hub.docker.com/r/mrtenz/vsftpd/).
 
 You can download the image with the following command:
 
 ```bash
-docker pull fauria/vsftpd
+docker pull mrtenz/vsftpd
 ```
 
 Environment variables
@@ -104,13 +104,6 @@ This image uses environment variables to allow the configuration of some paramet
 
 ----
 
-* Variable name: `REVERSE_LOOKUP_ENABLE`
-* Default value: YES
-* Accepted values: <NO|YES>
-* Description: Set to NO if you want to avoid performance issues where a name server doesn't respond to a reverse lookup.
-
-----
-
 * Variable name: `PASV_PROMISCUOUS`
 * Default value: NO
 * Accepted values: <NO|YES>
@@ -159,13 +152,13 @@ Use cases
 1) Create a temporary container for testing purposes:
 
 ```bash
-  docker run --rm fauria/vsftpd
+  docker run --rm mrtenz/vsftpd
 ```
 
 2) Create a container in active mode using the default user account, with a binded data directory:
 
 ```bash
-docker run -d -p 21:21 -v /my/data/directory:/home/vsftpd --name vsftpd fauria/vsftpd
+docker run -d -p 21:21 -v /my/data/directory:/home/vsftpd --name vsftpd mrtenz/vsftpd
 # see logs for credentials:
 docker logs vsftpd
 ```
@@ -178,7 +171,7 @@ docker run -d -v /my/data/directory:/home/vsftpd \
 -e FTP_USER=myuser -e FTP_PASS=mypass \
 -e PASV_ADDRESS=127.0.0.1 -e PASV_MIN_PORT=21100 -e PASV_MAX_PORT=21110 \
 -e SSL_ENABLE=YES -e TLS_CERT=ftps_localhost.crt -e TLS_KEY=ftps_localhost.key \
---name vsftpd --restart=always fauria/vsftpd
+--name vsftpd --restart=always mrtenz/vsftpd
 ```
 
 4) Manually add a new FTP user to an existing container:
