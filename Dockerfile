@@ -34,6 +34,7 @@ ENV PORT_PROMISCUOUS NO
 ENV SSL_ENABLE NO
 ENV TLS_CERT cert.pem
 ENV TLS_KEY key.pem
+ENV REQUIRE_SSL_REUSE YES
 
 COPY vsftpd.conf /etc/vsftpd/
 COPY vsftpd_virtual /etc/pam.d/
